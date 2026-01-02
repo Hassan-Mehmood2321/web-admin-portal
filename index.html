@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All-in-One Loader Page</title>
+    
+    <style>
+        /* --- CSS STYLES --- */
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            height: 100%;
+            overflow: hidden; /* Prevents scrolling while loading */
+        }
+
+        /* The Background Overlay */
+        #loader-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #1a1a2e; /* Dark professional theme */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.6s ease-out, visibility 0.6s;
+        }
+
+        /* The Spinning Ring */
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 6px solid rgba(255, 255, 255, 0.1);
+            border-top: 6px solid #00d2ff; /* Neon Blue */
+            border-radius: 50%;
+            animation: spin 1s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+        }
+
+        /* Loading Text */
+        .loading-text {
+            margin-top: 20px;
+            color: #ffffff;
+            font-size: 1.2rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Hiding logic */
+        .fade-out {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .main-content {
+            padding: 50px;
+            text-align: center;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="loader-wrapper">
+        <div class="spinner"></div>
+        <div class="loading-text">Loading</div>
+    </div>
+
+    <div class="main-content">
+        <h1>Welcome!</h1>
+    </div>
+<script type="module" src="./config/config.js"></script>
+    <script>
+        /* --- JAVASCRIPT LOGIC --- */
+        window.addEventListener("load", () => {
+            const loader = document.getElementById("loader-wrapper");
+            
+            // 1. Start the fade-out animation
+            setTimeout(() => {
+                loader.classList.add("fade-out");
+
+                // 2. Redirect AFTER the animation finishes (approx 600ms)
+                setTimeout(() => {
+                    // Correct syntax for redirect:
+                    window.location.href = "./public/index.html"; 
+                }, 600);
+
+            }, 1000); // Adjust this delay to control how long the loader stays visible
+        });
+    </script>
+
+</body>
+</html>
